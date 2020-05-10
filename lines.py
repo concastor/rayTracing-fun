@@ -20,7 +20,9 @@ class Lines:
             self.lines.append(tempLine)
             self.rotation += self.rotation_step
             
-
+    def remove_lines(self):
+        for i in self.lines:
+            i.remove_line()
 
     def draw_lines(self, x, y):
         for i in self.lines:

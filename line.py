@@ -17,8 +17,8 @@ class Line:
         self.b = self.ystart - (self.slope*self.xstart)
 
     #find where the lines collide
-    #TODO make sure that it picks the closet line for collisoins
     def find_end(self):
+        mini = math.inf
         for wall in self.walls:
             #first line
             x1 = wall[0]
@@ -26,14 +26,7 @@ class Line:
             x2 = wall[2]
             y2 = wall[3]
 
-            #second line
-            # if 0 < self.r < 180 :
-            #     x3 = 0
-            #     y3 = self.ystart - (self.slope*self.xstart) #has to refind the b location
-            #     x4 = self.xstart
-            #     y4 = self.ystart
-
-            # else:
+            # secod line
             x4 = 0
             y4 = self.ystart - (self.slope*self.xstart) #has to refind the b location
             x3 = self.xstart
@@ -44,20 +37,28 @@ class Line:
             if den != 0:
                 t = ((x1 - x3)*(y3 - y4) - (y1 - y3)*(x3-x4)) /den
                 u = ((x1 - x2)*(y1 - y3) - (y1 - y2)*(x1-x3)) /den
-                # print(t)
-                # print(u)
+
+                px = math.inf
+                py = math.inf
                 
                 #check if lines are going left or right
                 if 0 < self.r < 180 :
                     if 0< t < 1 and 0 > u:
-                        self.px = x1 + t*(x2 - x1)
-                        self.py = y1 + t*(y2 - y1)
+                        px = x1 + t*(x2 - x1)
+                        py = y1 + t*(y2 - y1)
                 else:
                     if 0< t < 1 and 0 < u:
-                        self.px = x1 + t*(x2 - x1)
-                        self.py = y1 + t*(y2 - y1)
-            
+                        px = x1 + t*(x2 - x1)
+                        py = y1 + t*(y2 - y1)
                 
+                #calculate distance between points
+                distance = math.sqrt(((self.xstart - px) ** 2) + ((self.ystart - py) ** 2))
+
+                #check if its the smallest
+                if distance < mini:
+                    self.px = px
+                    self.py = py
+                    mini = distance
 
 
     def draw_line(self, x, y):
@@ -71,6 +72,9 @@ class Line:
         self.ystart = y
         self.find_end()
         self.canvas.coords(self.id, x,y,self.px, self.py)
+
+    def remove_line(self):
+        self.canvas.delete(self.id)
 
 
 # def test():
