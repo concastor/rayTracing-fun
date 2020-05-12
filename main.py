@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 from time import sleep
 from orb import Orb
+import random as rand
 
 class Window:
     def __init__(self):
@@ -73,26 +74,26 @@ class Window:
     def callback720(self):
         self.orb.update_rays(720)
 
+
     def Mouse_move(self, event):
         self.window.after(15, self.orb.Redraw(event.x, event.y))
 
     def Draw_walls(self):
         #basic border walls
-        self.can.create_line(0,0,800,0)
-        self.can.create_line(0,800,800,800)
-        self.can.create_line(800,800,800,0)
-        self.can.create_line(0,800,0,0)
+        self.create_border(-50,0,800,0)
+        self.create_border(-50,800,850,800)
+        self.create_border(800,850,800,-50)
+        self.create_border(1,850,0,-50)
 
-        self.can.create_line(150,60,500,700)
-        self.can.create_line(80,30,700,200)
-        
-        self.walls.append([0,0,800,0])
-        self.walls.append([0,800,800,800])
-        self.walls.append([800,800,800,0])
-        self.walls.append([0,800,0,0])
-
-        self.walls.append([150,60,500,700])
-        self.walls.append([80,30,700,200])
+        for wall in range(4):
+            points = []
+            for point in range(4):
+                points.append(rand.randint(0,800))
+            self.create_border(points[0],points[1],points[2],points[2],)    
+            
+    def create_border(self, x1, y1, x2, y2):
+        self.can.create_line(x1, y1, x2, y2, width = 3)
+        self.walls.append([x1, y1, x2, y2])
 
 
 def main():
