@@ -13,8 +13,12 @@ class Line:
         self.px = None
         self.py = None
         self.r = r
-        self.slope = math.tan(math.radians(90 - r))
-        self.b = self.ystart - (self.slope*self.xstart)
+        if self.r is 0:
+            self.slope = None
+        else:
+            self.slope = math.tan(math.radians(90 - r))
+            self.b = self.ystart - (self.slope*self.xstart)
+
 
     #find where the lines collide
     def find_end(self):
@@ -25,10 +29,15 @@ class Line:
             y1 = wall[1]
             x2 = wall[2]
             y2 = wall[3]
-
-            # secod line
-            x4 = 0
-            y4 = self.ystart - (self.slope*self.xstart) #has to refind the b location
+            
+            if self.slope is None:
+                x4 = self.xstart
+                y4 = self.ystart-10
+            else:
+                # second line
+                x4 = 0
+                y4 = self.ystart - (self.slope*self.xstart) #has to refind the b location
+                
             x3 = self.xstart
             y3 = self.ystart
             

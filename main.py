@@ -9,28 +9,34 @@ class Window:
         super().__init__()
         self.window = tk.Tk()
         self.window.title("RAY Tracing ON")
-        self.window.geometry("800x850")
+        self.window.geometry("1600x850")
         self.walls = []
 
-        #create canvas for drawing
-        self.can = Canvas(self.window, width = 800, height = 800)
-        self.can.pack()
-        
-        #create button frames and buttons
-        self.buttonFrame = Frame(self.window, bg='grey', width = 800)
+        #function related to left frame of GUI
+        self.leftFrame = Frame(self.window, width = 800)
+        self.leftFrame.pack(side=LEFT)
+
+        self.rayCan = Canvas(self.leftFrame, width = 800, height = 800)
+        self.rayCan.pack()
+
+        self.buttonFrame = Frame(self.leftFrame, bg='grey', width = 800)
         self.buttonFrame.pack(fill = X)
         
         self.Draw_walls()
-        self.orb = Orb(800 / 2, 800 / 2, self.can, self.window , self.walls)
-
-        #add the bottom buttons
         self.add_buttons()
 
-    
+        self.rayCan.bind('<Motion>', self.Mouse_move) #mouse move event
+        self.window.bind('<a>', lambda x: self.Left_press()) #key press event
+        self.window.bind('<d>', lambda y: self.Right_press()) #key press event
 
-        #event binder
-        self.can.bind('<Motion>', self.Mouse_move) #mouse move event
+        #functions related to Right side of binder
+        self.rightFrame = Frame(self.window, width = 800)
+        self.rightFrame.pack(side=LEFT)
 
+        self.wallCan = Canvas(self.rightFrame, width = 800, height = 800)
+        self.wallCan.pack()
+
+        self.orb = Orb(800/2, 800/2, self.rayCan, self.wallCan, self.window, self.walls)
 
 
     def add_buttons(self):
@@ -85,14 +91,14 @@ class Window:
         self.create_border(800,850,800,-50)
         self.create_border(1,850,0,-50)
 
-        for wall in range(4):
+        for wall in range(5):
             points = []
             for point in range(4):
                 points.append(rand.randint(0,800))
             self.create_border(points[0],points[1],points[2],points[2],)    
             
     def create_border(self, x1, y1, x2, y2):
-        self.can.create_line(x1, y1, x2, y2, width = 3)
+        self.rayCan.create_line(x1, y1, x2, y2, width = 3)
         self.walls.append([x1, y1, x2, y2])
 
 
