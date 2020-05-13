@@ -12,9 +12,13 @@ class Line:
         #end points
         self.px = None
         self.py = None
-        self.r = r
+        self.r = r if r!=0 else 1
+
+        self.Find_slope(r)
+
+    def Find_slope(self, r):
+        r = r if r!=0 else 1
         self.slope = math.tan(math.radians(90 - r))
-        self.b = self.ystart - (self.slope*self.xstart)
 
     #find where the lines collide
     def find_end(self):
@@ -66,7 +70,12 @@ class Line:
         self.ystart = y
         self.find_end()
         self.id = self.canvas.create_line(self.xstart,self.ystart, self.px, self.py)
-
+    
+    def relocate(self, r):
+        self.Find_slope(r)
+        self.find_end()
+        self.canvas.coords(self.id, self.xstart, self.ystart ,self.px, self.py)
+    
     def redraw_line(self, x, y):
         self.xstart = x
         self.ystart = y
