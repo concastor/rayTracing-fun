@@ -33,3 +33,9 @@ class Lines:
     def redraw_lines(self, x, y):
         for i in self.lines:
             i.redraw_line(x, y)
+
+    def get_distances(self):
+        temp = []
+        for i in self.lines:
+            temp.append(i.distance)
+        return temp

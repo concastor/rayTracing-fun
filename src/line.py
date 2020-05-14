@@ -9,12 +9,12 @@ class Line:
         self.ystart = ys
         self.walls = walls
 
+        self.distance = 0
+
         #end points
         self.px = None
         self.py = None
         self.r = r
-
-        # if self.r == 360: self.r = 0 #resets the circle rotation
         
         self.angle = 90 + r
         if self.r == 0 or self.r == 180:
@@ -72,6 +72,7 @@ class Line:
                     self.px = px
                     self.py = py
                     mini = distance
+                    self.distance = int(mini) /2 
 
 
     def draw_line(self, x, y):
