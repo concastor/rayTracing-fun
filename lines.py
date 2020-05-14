@@ -8,14 +8,16 @@ class Lines:
         self.y = y
         self.can = canvas
         self.size = size
-        self.rotation = 0
+        self.rotation = 30
         self.rotation_step = 360/size
         self.lines = []
         self.walls = walls #might be unnesccary to pass to each line
-        self.create_pop()
+        self.FOV = int(self.size / 6)
 
+        self.create_pop()
+        
     def create_pop(self):
-        for i in range(self.size):
+        for i in range(self.FOV):
             tempLine = Line(self.x, self.y, self.walls, self.rotation, self.can)
             self.lines.append(tempLine)
             self.rotation += self.rotation_step

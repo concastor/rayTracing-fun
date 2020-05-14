@@ -13,10 +13,14 @@ class Line:
         self.px = None
         self.py = None
         self.r = r
-        if self.r is 0:
+
+        # if self.r == 360: self.r = 0 #resets the circle rotation
+        
+        self.angle = 90 + r
+        if self.r == 0 or self.r == 180:
             self.slope = None
         else:
-            self.slope = math.tan(math.radians(90 - r))
+            self.slope = math.tan(math.radians(self.angle))
             self.b = self.ystart - (self.slope*self.xstart)
 
 
@@ -32,9 +36,9 @@ class Line:
             
             if self.slope is None:
                 x4 = self.xstart
-                y4 = self.ystart-10
+                y4 = self.ystart + 10
+                
             else:
-                # second line
                 x4 = 0
                 y4 = self.ystart - (self.slope*self.xstart) #has to refind the b location
                 
@@ -51,7 +55,7 @@ class Line:
                 py = math.inf
                 
                 #check if lines are going left or right
-                if 0 < self.r < 180 :
+                if 0 <= self.r < 180 :
                     if 0< t < 1 and 0 > u:
                         px = x1 + t*(x2 - x1)
                         py = y1 + t*(y2 - y1)

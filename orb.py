@@ -11,8 +11,10 @@ class Orb:
         self.x = x
         self.y = y
         self.r = 10 #radius of circle
-        self.amount = 180  #default bvalue
+        self.amount = 180  #default angle of rays
         self.walls = walls
+
+
  
         self.lines = Lines(self.amount, self.rayCan, self.walls, x ,y)
 
