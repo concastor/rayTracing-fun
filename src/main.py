@@ -80,9 +80,15 @@ class Window:
     def callback720(self):
         self.orb.update_rays(720)
 
-
+    #event handlers
     def Mouse_move(self, event):
         self.window.after(15, self.orb.Redraw(event.x, event.y))
+
+    def Left_press(self):
+        self.orb.rotate_left()
+
+    def Right_press(self):
+        self.orb.rotate_right()
 
     def Draw_walls(self):
         #basic border walls

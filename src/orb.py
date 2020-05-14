@@ -14,11 +14,26 @@ class Orb:
         self.amount = 180  #default angle of rays
         self.walls = walls
 
+        self.rot = 0  #starting angle for FOV
 
- 
-        self.lines = Lines(self.amount, self.rayCan, self.walls, x ,y)
+        self.lines = Lines(self.amount, self.rayCan, self.walls, x ,y , self.rot)
 
         self.DrawCircle()
+    
+    def rotate_left(self):
+        self.rot -= 2
+        if self.rot < -180: self.rot = 180
+        self.lines.remove_lines()
+        self.lines = Lines(self.amount, self.rayCan, self.walls, self.x , self.y, self.rot)
+        self.lines.draw_lines(self.x, self.y)
+
+    def rotate_right(self):
+        self.rot += 2
+        if self.rot > 180: self.rot = -180
+        self.lines.remove_lines()
+        self.lines = Lines(self.amount, self.rayCan, self.walls, self.x , self.y, self.rot)
+        self.lines.draw_lines(self.x, self.y)
+
 
     def DrawCircle(self):
         self.id = self.rayCan.create_oval(self.x - self.r, self.y - self.r, self.x + self.r, self.y + self.r, fill = "black")
@@ -26,6 +41,8 @@ class Orb:
         self.wallCan.create_oval(self.x - self.r, self.y - self.r, self.x + self.r, self.y + self.r, fill = "black")
 
     def Redraw(self, x, y):
+        self.x = x
+        self.y = y
         self.rayCan.coords(self.id, x - self.r, y - self.r, x + self.r, y + self.r)
         self.lines.redraw_lines(x, y)
 
@@ -33,7 +50,7 @@ class Orb:
         self.rayCan.delete(self.id)
         self.lines.remove_lines()
         self.amount = x
-        self.lines = Lines(self.amount, self.rayCan, self.walls, self.x ,self.y)
+        self.lines = Lines(self.amount, self.rayCan, self.walls, self.x ,self.y, self.rot)
         self.DrawCircle()
 
         

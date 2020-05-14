@@ -2,13 +2,13 @@ from line import Line
 
 #population class for lines
 class Lines:
-    def __init__(self, size, canvas, walls, x, y):
+    def __init__(self, size, canvas, walls, x, y, rot):
         super().__init__()
         self.x = x
         self.y = y
         self.can = canvas
         self.size = size
-        self.rotation = 30
+        self.rotation = rot
         self.rotation_step = 360/size
         self.lines = []
         self.walls = walls #might be unnesccary to pass to each line
