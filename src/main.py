@@ -33,10 +33,10 @@ class Window:
         self.rightFrame = Frame(self.window, width = 800)
         self.rightFrame.pack(side=LEFT)
 
-        self.wallCan = Canvas(self.rightFrame, width = 800, height = 800)
+        self.wallCan = Canvas(self.rightFrame, width = 800, height = 800, bg = "light grey")
         self.wallCan.pack()
 
-        self.orb = Orb(800/2, 800/2, self.rayCan, self.wallCan, self.window, self.walls)
+        self.orb = Orb(750, 50, self.rayCan, self.wallCan, self.window, self.walls)
 
 
     def add_buttons(self):
@@ -97,11 +97,16 @@ class Window:
         self.create_border(800,850,800,-50)
         self.create_border(1,850,0,-50)
 
-        for wall in range(5):
-            points = []
-            for point in range(4):
-                points.append(rand.randint(0,800))
-            self.create_border(points[0],points[1],points[2],points[2],)    
+        # for wall in range(5):
+        #     points = []
+        #     for point in range(4):
+        #         points.append(rand.randint(0,800))
+        #     self.create_border(points[0],points[1],points[2],points[2],)    
+    
+        self.create_border(300, 300, 500,300)
+        self.create_border(500, 300, 500,500)
+        self.create_border(500, 500, 300,500)
+        self.create_border(300, 500, 300,300)
             
     def create_border(self, x1, y1, x2, y2):
         self.rayCan.create_line(x1, y1, x2, y2, width = 3)

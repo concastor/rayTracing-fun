@@ -72,7 +72,8 @@ class Line:
                     self.px = px
                     self.py = py
                     mini = distance
-                    self.distance = int(mini) /2 
+                    self.distance = int(mini) / 2 
+                    if self.distance > 400: self.distance = 400
 
 
     def draw_line(self, x, y):
@@ -89,16 +90,5 @@ class Line:
 
     def remove_line(self):
         self.canvas.delete(self.id)
-
-
-# def test():
-#     test = Line(10, 10, [], 60, 10)
-#     print(test.slope)
-#     print(test.b)
-#     print("")
-#     test.find_end()
-#     test.draw_line()
-
-# test()
 
     

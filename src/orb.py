@@ -11,7 +11,7 @@ class Orb:
         self.x = x
         self.y = y
         self.r = 10 #radius of circle
-        self.amount = 360  #default angle of rays
+        self.amount = 720  #default angle of rays
         self.walls = walls
 
         self.bricks = []
@@ -56,6 +56,7 @@ class Orb:
     def update_rays(self, x):
         self.rayCan.delete(self.id)
         self.lines.remove_lines()
+        self.remove_bricks
         self.amount = x
         self.lines = Lines(self.amount, self.rayCan, self.walls, self.x ,self.y, self.rot)
         self.DrawCircle()
@@ -68,7 +69,8 @@ class Orb:
         right_point = width
 
         for i in borders:
-            self.bricks.append(self.wallCan.create_rectangle(left_point, i, right_point, 800-i, fill = "grey"))
+           
+            self.bricks.append(self.wallCan.create_rectangle(left_point, i, right_point, 800-i, outline = "", fill = self.determine_color(i)))
             left_point = right_point
             right_point += width
     
@@ -77,10 +79,25 @@ class Orb:
         width = 796 / len(borders)
         left_point = 0
         right_point = width
-        
+
         for i in range(len(borders)):
-            self.wallCan.coords(self.bricks[i], left_point, borders[i], right_point, 800- borders[i])
+            self.wallCan.coords(self.bricks[i], left_point, borders[i], right_point, 800- borders[i]) 
+            self.wallCan.itemconfig(self.bricks[i], fill = self.determine_color(borders[i]))
             left_point = right_point
             right_point += width
             
+    def remove_bricks(self):
+        for i in self.bricks:
+            self.wallCan.delete(i)
+        self.bricks = []
 
+    def determine_color(self, distance):
+        #smaller distance = brighter
+        shadefactor = distance / 400
+        r = 68 - (68*shadefactor)
+        g = 32 - (32*shadefactor)
+        b = 247 -(247*shadefactor)
+
+        colour = '#%02x%02x%02x' % (int(r), int(g), int(b))
+
+        return colour
